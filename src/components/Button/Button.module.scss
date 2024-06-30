@@ -1,0 +1,214 @@
+// @import url('../../styles.scss');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+$small: 28px;
+$medium: 36px;
+$large: 56px;
+
+$small-padding: 6px 10px;
+$medium-padding: 8px 12px;
+$large-padding: 16px;
+
+$small-radius: 9.3px;
+$medium-radius: 12px;
+$large-radius: 16px;
+
+$color-font: #fff;
+$color-primary: #ff7700;
+$color-secondary: rgb(237, 231, 234);
+$color-focus: rgb(0, 153, 255);
+
+$animation: 500ms cubic-bezier(0, -0.3, 0.5, 1.3);
+$focus-offset-small: 5px;
+$focus-offset-medium: 4.5px;
+$focus-offset-large: 5.2px;
+
+@keyframes move {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  position: relative;
+  overflow: hidden;
+  color: $color-font;
+  border: none;
+  font-weight: 500;
+  max-width: 268px;
+  outline: none;
+
+  &.small {
+    padding: $small-padding;
+    border-radius: $small-radius;
+    height: $small;
+    font-size: 13px;
+    .loader {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &.medium {
+    padding: $medium-padding;
+    border-radius: $medium-radius;
+    height: $medium;
+    font-size: 15px;
+
+    .loader {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &.large {
+    padding: $large-padding;
+    border-radius: $large-radius;
+    height: $large;
+    font-size: 17px;
+
+    .loader {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &:hover {
+    .overlay {
+      inset: 0;
+      opacity: 12%;
+    }
+    .content {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.focused {
+  position: relative;
+  overflow: visible;
+
+  &.small::after {
+    top: -$focus-offset-small;
+    left: -$focus-offset-small;
+    right: -$focus-offset-small;
+    bottom: -$focus-offset-small;
+    border-radius: 13px;
+  }
+
+  &.medium::after {
+    top: -$focus-offset-medium;
+    left: -$focus-offset-medium;
+    right: -$focus-offset-medium;
+    bottom: -$focus-offset-medium;
+    border-radius: 14px;
+  }
+
+  &.large::after {
+    top: -$focus-offset-large;
+    left: -$focus-offset-large;
+    right: -$focus-offset-large;
+    bottom: -$focus-offset-large;
+    border-radius: 20px;
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    border-radius: inherit;
+    border: 4px solid $color-focus;
+    pointer-events: none;
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 36%;
+  & .secondary {
+    background-color: #d7d1d4;
+  }
+}
+
+.loading {
+  .content {
+    opacity: 0;
+  }
+  .shimmer {
+    opacity: 12%;
+  }
+  .loader {
+    opacity: 1;
+  }
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.overlay,
+.shimmer,
+.loader,
+.content {
+  transition: all $animation;
+}
+
+.overlay,
+.shimmer,
+.loader {
+  position: absolute;
+}
+
+.overlay,
+.shimmer {
+  inset: 0;
+  z-index: 10;
+  opacity: 0;
+  background-color: $color-font;
+}
+
+.shimmer {
+  width: 33%;
+  animation: move 1000ms linear infinite;
+}
+
+.loader {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  opacity: 0;
+}
+
+.primary {
+  background-color: $color-primary;
+  transition: all 0.3s linear;
+  &:hover {
+    background-color: #ff881f;
+  }
+}
+
+.secondary {
+  background-color: $color-secondary;
+  transition: all 0.3s linear;
+  &:hover {
+    background-color: #d7d1d4;
+  }
+}

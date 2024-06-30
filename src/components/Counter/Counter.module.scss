@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+$background-primary: #2fb675;
+$background-secondary: #f0ecea;
+$sizes: (8, 12, 16, 20, 24);
+$radius: 50%;
+$font-sizes: (
+  16: 11px,
+  20: 13px,
+  24: 15px,
+);
+
+$border-widths: (
+  8: 1px,
+  12: 2px,
+  16: 2px,
+  20: 2px,
+  24: 3px,
+);
+.counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: $radius;
+
+  @each $size in $sizes {
+    &.counter-size-#{$size} {
+      width: #{$size}px;
+      height: #{$size}px;
+      @if ($size > 12) {
+        padding: #{calc($size / 4)}px;
+      }
+
+      @if ($size < 16) {
+        &.pulse {
+          position: relative;
+
+          &::before,
+          &::after {
+            content: "";
+            display: block;
+            position: absolute;
+            height: #{$size}px;
+            width: #{$size}px;
+            border-radius: $radius;
+            animation: fade infinite 2s;
+          }
+
+          &::before {
+            animation-delay: 0.25s;
+          }
+        }
+      }
+    }
+  }
+
+  &.stroke {
+    border-style: solid;
+
+    @each $size, $width in $border-widths {
+      &.counter-size-#{$size} {
+        border-width: $width;
+      }
+    }
+  }
+}
+
+.stroke {
+  // border: 2px solid $stroke-color;
+}
+
+.quantity {
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+  color: #fff;
+
+  @each $size, $font-size in $font-sizes {
+    .counter-size-#{$size} & {
+      font-size: $font-size;
+    }
+  }
+}
+
+.primary,
+.secondary {
+  &.primary {
+    background-color: $background-primary;
+  }
+  &.secondary {
+    background-color: $background-secondary;
+  }
+  &::after,
+  &::before {
+    background-color: inherit;
+    opacity: 20%;
+  }
+}
+
+@keyframes fade {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(3);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+}
